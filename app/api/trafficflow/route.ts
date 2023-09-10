@@ -10,7 +10,6 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const data = await request.json();
-  if (!data.room) throw new Error('no room');
 
   const workflowData = await client.query(api.trafficflow.get);
   if (!workflowData) throw new Error('no trafficflow machine available');
@@ -23,8 +22,6 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
-  const data = await request.json();
-  if (!data.room) throw new Error('no room');
-  client.mutation(api.trafficflow.update, { room: data.room, state: JSON.stringify(trafficLightMachine.initialState), machine: JSON.stringify(trafficLightMachine) });
+  client.mutation(api.trafficflow.update, { state: JSON.stringify(trafficLightMachine.initialState), machine: JSON.stringify(trafficLightMachine) });
   return new Response('ok', { status: 200 });
 }

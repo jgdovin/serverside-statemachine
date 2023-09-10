@@ -3,8 +3,8 @@ import { query, mutation } from "./_generated/server";
 const id = '1';
 
 export const update = mutation({
-  args: { room: v.string(), state: v.string(), machine: v.string() },
-  handler: async ( ctx, { room, state, machine }) => {
+  args: { state: v.string(), machine: v.string() },
+  handler: async ( ctx, { state, machine }) => {
     const existing = await ctx.db
       .query("trafficflow")
       .withIndex("by_light_id", (q) => q.eq("id", id))
