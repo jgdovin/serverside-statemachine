@@ -7,7 +7,7 @@ export const update = mutation({
   handler: async ( ctx, { room, state, machine }) => {
     const existing = await ctx.db
       .query("trafficflow")
-      .withIndex("by_id", (q) => q.eq("id", id))
+      .withIndex("by_light_id", (q) => q.eq("id", id))
       .unique();
 
     if (existing) {
@@ -17,6 +17,7 @@ export const update = mutation({
         machine,
         state,
         id,
+        activeState: 'red'
       });
 
     }
@@ -26,17 +27,17 @@ export const update = mutation({
 export const get = query({
   args: { },
   handler: async ( ctx ) => {
-    const workflowData = await ctx.db.query('trafficflow').withIndex('by_id', (q) => q.eq('id', id)).unique();
-    if (!workflowData) throw new Error('no gameflow machine available');
+    const workflowData = await ctx.db.query('trafficflow').withIndex('by_light_id', (q) => q.eq('id', id)).unique();
+    if (!workflowData) throw new Error('no trafficflow machine available');
     return workflowData;
   }
 })
 
 export const post = mutation({
-  args: { state: v.string() },
-  handler: async ( ctx, { state }) => {
-    const workflowData = await ctx.db.query('trafficflow').withIndex('by_id', (q) => q.eq('id', id)).unique();
-    if (!workflowData) throw new Error('no gameflow machine available');
-    await ctx.db.patch(workflowData._id, { state });
+  args: { state: v.string(), activeState: v.string() },
+  handler: async ( ctx, { state, activeState }) => {
+    const workflowData = await ctx.db.query('trafficflow').withIndex('by_light_id', (q) => q.eq('id', id)).unique();
+    if (!workflowData) throw new Error('no trafficflow machine available');
+    await ctx.db.patch(workflowData._id, { state, activeState });
   }
 })

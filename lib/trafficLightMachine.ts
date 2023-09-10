@@ -6,7 +6,7 @@ const trafficLightMachine =
     predictableActionArguments: true,
     schema: { events: {} as { type: 'eventType' } },
     id: 'trafficLight',
-    initial: 'green',
+    initial: 'red',
     states: {
       green: {
         on: {
