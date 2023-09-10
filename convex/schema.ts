@@ -7,5 +7,5 @@ export default defineSchema({
     activeState: v.string(),
     machine: v.string(),
     id: v.string()
-  }).index('by_light_id', ['id'])
+  })
 });
