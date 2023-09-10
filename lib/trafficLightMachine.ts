@@ -1,4 +1,3 @@
-import { useQuery } from 'convex/react';
 import { createMachine } from 'xstate';
 
 const trafficLightMachine =
