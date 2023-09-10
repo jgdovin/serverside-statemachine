@@ -5,7 +5,9 @@ const client = new ConvexHttpClient(process.env["CONVEX_URL"]);
 import trafficLightMachine from "@/lib/trafficLightMachine";
 
 export async function GET(request: Request) {
-  return new Response('ok', { status: 200 });
+  const workflowData = await client.query(api.trafficflow.get);
+  console.log(workflowData)
+  return new Response(workflowData.activeState, { status: 200 });
 }
 
 export async function POST(request: Request) {
